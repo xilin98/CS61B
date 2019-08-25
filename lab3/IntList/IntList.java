@@ -4,18 +4,19 @@ import java.util.Formatter;
  * A naked recursive list of integers, similar to what we saw in lecture 3, but
  * with a large number of additional methods.
  *
- * @author P. N. Hilfinger, with some modifications by Josh Hug and melaniecebula
+ * @author P. N. Hilfinger, with some modifications by Josh Hug and
+ * melaniecebula
  *         [Do not modify this file.]
  */
 public class IntList {
     /**
      * First element of list.
      */
-    public int first;
+    private int first;
     /**
      * Remaining elements of list.
      */
-    public IntList rest;
+    private IntList rest;
 
     /**
      * A List with first FIRST0 and rest REST0.
@@ -81,12 +82,11 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
         IntList p = A;
-        while(p.rest != null){
+        while (p.rest != null) {
             p = p.rest;
         }
-            p.rest = B;
+        p.rest = B;
         return A;
     }
 
@@ -95,18 +95,31 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
-        //TODO:  fill in method
         IntList res = new IntList(A.first, null);
         IntList ptr = res;
         A = A.rest;
-        while(A != null){
-            res.rest =new IntList(A.first, null);
+        while (A != null) {
+            res.rest = new IntList(A.first, null);
             A = A.rest;
             res = res.rest;
         }
         res.rest = B;
         return ptr;
     }
+
+    /** Return the reversed Intlist.
+     * @param x a input Intlist.*/
+    public static IntList reverse(IntList x) {
+        if (x == null || x.rest == null) {
+            return x;
+        }
+        IntList ptr = x.rest;
+        IntList reversed = reverse(x.rest);
+        x.rest = null;
+        ptr.rest = x;
+        return reversed;
+    }
+
 
 
 
@@ -179,7 +192,7 @@ public class IntList {
     }
 
     /**
-     * If a cycle exists in the IntList, this method
+     * If a cycle exists in the IntList A, this method
      * returns an integer equal to the item number of the location where the
      * cycle is detected.
      * <p>
@@ -189,7 +202,6 @@ public class IntList {
      * an IntList into a String and that IntList has a loop, your computer
      * doesn't get stuck in an infinite loop.
      */
-
     private int detectCycles(IntList A) {
         IntList tortoise = A;
         IntList hare = A;
