@@ -40,8 +40,7 @@ public class TestCalcNetForceExertedByXY {
     private static double round(double value, int places) {
         if (places < 0 || Double.isNaN(value) || Double.isInfinite(value)) {
             System.out.println("Tried to round: " + value + ", but couldn't.");
-            throw new IllegalArgumentException();
-        }
+            throw new  .
 
         BigDecimal bd = new BigDecimal(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
