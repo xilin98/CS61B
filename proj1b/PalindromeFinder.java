@@ -1,15 +1,23 @@
 /** This class outputs all palindromes in the words file in the current directory. */
-/*public class PalindromeFinder {
+ public class PalindromeFinder {
     public static void main(String[] args) {
         int minLength = 4;
-        In in = new In("../library-sp18/data/words.txt");
+        String max = "";
+        In in = new In("../library-sp19/data/words.txt");
         Palindrome palindrome = new Palindrome();
 
-        while (!in.isEmpty()) {
-            String word = in.readString();
-            if (word.length() >= minLength && palindrome.isPalindrome(word)) {
-                System.out.println(word);
+        OffByN offByTree = new OffByN(3);
+        for (int i = 0; i < 26; i++){
+            OffByN offByI = new OffByN(i);
+            while (!in.isEmpty()) {
+                String word = in.readString();
+                if (word.length() >= minLength && palindrome.isPalindrome(word, offByI)) {
+                    if (max.length() < word.length()) {
+                        max = word;
+                    }
+                }
             }
         }
+        System.out.println(max);
     }
-} Uncomment this class once you've written isPalindrome. */
+}

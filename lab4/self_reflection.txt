@@ -4,11 +4,11 @@ ArrayDeque:
 
 Q: Give an example of at least one idea from the staff solution that would have made your solution better (if any).
 
-A: 
+A: The circle solution.
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A: It's easy to read.
 
 Q: What's something that was particularly inelegant in your code, if anything?
 

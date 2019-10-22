@@ -35,9 +35,9 @@ public class Plip extends Creature {
      */
     public Plip(double e) {
         super("plip");
-        r = 0;
-        g = 0;
-        b = 0;
+        r = 99;
+        g = (int)(96 * e + 63);
+        b = 76;
         energy = e;
     }
 
@@ -57,7 +57,6 @@ public class Plip extends Creature {
      * that you get this exactly correct.
      */
     public Color color() {
-        g = 63;
         return color(r, g, b);
     }
 
@@ -74,7 +73,10 @@ public class Plip extends Creature {
      * private static final variable. This is not required for this lab.
      */
     public void move() {
-        // TODO
+        energy -= 0.15;
+        if (energy < 0){
+            energy = 0;
+        }
     }
 
 
@@ -82,7 +84,10 @@ public class Plip extends Creature {
      * Plips gain 0.2 energy when staying due to photosynthesis.
      */
     public void stay() {
-        // TODO
+        energy += 0.2;
+        if (energy > 2){
+            energy = 2;
+        }
     }
 
     /**
@@ -91,7 +96,9 @@ public class Plip extends Creature {
      * Plip.
      */
     public Plip replicate() {
-        return this;
+        energy /= 2;
+        Plip offspring = new Plip(this.energy());
+        return offspring;
     }
 
     /**
@@ -110,13 +117,30 @@ public class Plip extends Creature {
     public Action chooseAction(Map<Direction, Occupant> neighbors) {
         // Rule 1
         Deque<Direction> emptyNeighbors = new ArrayDeque<>();
-        boolean anyClorus = false;
-        // TODO
+        Deque<Direction> clorusNeighbors = new ArrayDeque<>();
         // (Google: Enhanced for-loop over keys of NEIGHBORS?)
         // for () {...}
+        for (Direction d : neighbors.keySet()) {
+            if (neighbors.get(d).name().equals("empty")) {
+                emptyNeighbors.add(d);
+            }
 
-        if (false) { // FIXME
-            // TODO
+            if(neighbors.get(d).name().equals("clorus")) {
+                clorusNeighbors.add(d);
+            }
+        }
+        if (emptyNeighbors.isEmpty()) {
+            return new Action(Action.ActionType.STAY);
+        } else if (energy() > 1) {
+            return new Action(Action.ActionType.REPLICATE, emptyNeighbors.getFirst());
+        } else if (!clorusNeighbors.isEmpty() && Math.random() < 0.5){
+            while(true) {
+                for(Direction d : emptyNeighbors) {
+                    if (Math.random() < 1.0 / emptyNeighbors.size()) {
+                        return new Action(Action.ActionType.MOVE, d);
+                    }
+                }
+            }
         }
 
         // Rule 2

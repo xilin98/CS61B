@@ -10,7 +10,7 @@ import huglife.Impassible;
 import huglife.Empty;
 
 /** Tests the plip class
- *  @authr FIXME
+ *  @authr xilin
  */
 
 public class TestPlip {
@@ -32,15 +32,19 @@ public class TestPlip {
 
     @Test
     public void testReplicate() {
-        // TODO
+        Plip p = new Plip(2);
+        Plip p_offspring = p.replicate();
+        assertEquals(1.00, p.energy(), 0.01);
+        assertEquals(1.00, p_offspring.energy(), 0.01);
+        assertNotEquals(p, p_offspring);
     }
 
-    //@Test
+    @Test
     public void testChoose() {
 
         // No empty adjacent spaces; stay.
         Plip p = new Plip(1.2);
-        HashMap<Direction, Occupant> surrounded = new HashMap<Direction, Occupant>();
+        HashMap<Direction, Occupant> surrounded = new HashMap<>();
         surrounded.put(Direction.TOP, new Impassible());
         surrounded.put(Direction.BOTTOM, new Impassible());
         surrounded.put(Direction.LEFT, new Impassible());
@@ -54,7 +58,7 @@ public class TestPlip {
 
         // Energy >= 1; replicate towards an empty space.
         p = new Plip(1.2);
-        HashMap<Direction, Occupant> topEmpty = new HashMap<Direction, Occupant>();
+        HashMap<Direction, Occupant> topEmpty = new HashMap<>();
         topEmpty.put(Direction.TOP, new Empty());
         topEmpty.put(Direction.BOTTOM, new Impassible());
         topEmpty.put(Direction.LEFT, new Impassible());
@@ -68,7 +72,7 @@ public class TestPlip {
 
         // Energy >= 1; replicate towards an empty space.
         p = new Plip(1.2);
-        HashMap<Direction, Occupant> allEmpty = new HashMap<Direction, Occupant>();
+        HashMap<Direction, Occupant> allEmpty = new HashMap<>();
         allEmpty.put(Direction.TOP, new Empty());
         allEmpty.put(Direction.BOTTOM, new Empty());
         allEmpty.put(Direction.LEFT, new Empty());
@@ -97,6 +101,11 @@ public class TestPlip {
 
         assertEquals(expected, actual);
 
+        HashMap<Direction, Occupant> topClorus = new HashMap<>();
+        topClorus.put(Direction.TOP, new Clorus());
+        topClorus.put(Direction.BOTTOM, new Impassible());
+        topClorus.put(Direction.LEFT, new Empty());
+        topClorus.put(Direction.RIGHT, new Empty());
 
         // We don't have Cloruses yet, so we can't test behavior for when they are nearby right now.
     }
